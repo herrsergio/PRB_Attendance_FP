@@ -235,6 +235,42 @@ public class PRBAttendance extends JFrame {
 		String s;
 		String [] data;
 		
+		/*
+		 * Formato de salida del comando: /usr/bin/ph/emplalt/bin/emplshowdata.s /usr/fms/data/hrcempl.dat
+		 * CESAR GARAVITO|105502|GAMC870107000|92|87
+		 * NOMBRE|No. Empl|RFC|Depto.|Puesto
+		 * 
+		 * donde Depto puede ser:
+		 *    92 Tripulación
+		 *    90 Gerente
+		 *    91 Asistente Sal
+		 *    93 Asistente Hr
+		 *    94 Shift Manager
+		 *    
+		 * Puesto puede ser:
+		 *    20 1_Geren_Directas 00 90 0 0 U
+		 *    66 1_Subger_Directas 00 94 0 0 H
+         *    80 2_Serv_Anf/Coc/Mtro 00 92 0 0 S
+         *    81 2_Prod_Anf/Coc/Mtro 00 92 0 0 P
+		 *	  82 3_Serv_Empacad/Ay_Coc 00 92 0 0 S
+		 *	  83 3_Prod_Empacad/Ay_Coc 00 92 0 0 P
+		 *	  85 4_Coordinador_HD 00 92 0 0 S
+		 *    86 5_SubCoordinador_HD 00 92 0 0 S
+		 *    57 6_Repartidor 00 92 0 0 D
+		 *	  87 7_Atye_General 00 92 0 0 S
+		 *	  88 8_Lider_Tripul 00 92 0 0 S
+		 *	  35 9_Serv_Tripul 00 92 0 0 S
+		 *	  36 9_Prod_Tripul 00 92 0 0 P
+		 *	  21 Gerente_Indirectas 00 90 0 2 U
+		 *	  23 Gerente_Entrenam 00 90 0 1 U
+		 *	  37 Trip_Indirectas 00 92 0 2 M
+		 *	  38 Trip_Entrenam 00 92 0 1 M
+		 *	  67 Shift_Ger_Indirect 00 94 0 2 H
+		 *	  68 Shift_Ger_Entrenam 00 94 0 1 H 
+         *
+		 *    
+		 */
+		
 		try {
 			Process p = Runtime.getRuntime().exec(cmd);
 			
