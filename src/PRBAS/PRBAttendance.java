@@ -34,6 +34,12 @@ public class PRBAttendance extends JFrame {
 	private JMenu menuHelp;
 	private JMenuItem menuItem;
 	
+	private String Empl_Name;
+	private String Empl_RFC;
+	private String Empl_NUM;
+	private String Empl_Dept;
+	private String Empl_Puesto;
+	
 	private native int verify(int finger, String path, String user);
 	
 	static {
@@ -138,15 +144,53 @@ public class PRBAttendance extends JFrame {
 				// TODO Auto-generated method stub
 				
 				Employee emp = (Employee) EmployeeBox.getSelectedItem();
-				String    id = emp.getID();
-				String name  = emp.getName();
+				String     id = emp.getID();
+				String   name = emp.getName();
+				String    rfc = emp.getRFC();
+				String puesto = emp.getPuesto();
+				String   dept = emp.getDept();
 				String instructions;
+				
+				String[] cmd = { "/bin/sh", "-c", "/usr/bin/ph/emplalt/bin/check_if_clockin.sh "+ id};
+				String s;
+				String data = "";
+				
+				String fingerName = (String)FingerBox.getSelectedItem();
+				String EntradaSalida = (String)InOutBox.getSelectedItem();
+				
+				try {
+					Process p = Runtime.getRuntime().exec(cmd);
+					
+					BufferedReader stdInput = new BufferedReader(new
+			                 InputStreamReader(p.getInputStream()));
+
+					
+					while ((s = stdInput.readLine()) != null) {
+						data = s;
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				System.out.println("data = "+data);
+				
+				if(data.equals("0") && EntradaSalida.equals("Entrada")) {
+					JOptionPane.showMessageDialog(DateHourPanel, "Ya registraste tu entrada "+name, "Error",
+							JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
+				}
+				
+				if(data.equals("1") && EntradaSalida.equals("Salida")) {
+					JOptionPane.showMessageDialog(DateHourPanel, "No has realizado tu entrada "+name, "Error",
+							JOptionPane.ERROR_MESSAGE);
+					System.exit(0);
+				}
+				
+				
 				
 				int f = 0;
 				int result = 0;
 				
-				String fingerName = (String)FingerBox.getSelectedItem();
-				String EntradaSalida = (String)InOutBox.getSelectedItem();
 				
 				/*
 				if(fingerName.equals("Pulgar izquierdo")) f = 0;
@@ -202,11 +246,37 @@ public class PRBAttendance extends JFrame {
 		        		String msg;
 		        	
 		        		if(EntradaSalida.equals("Entrada")) {
+		        			String cmd2 =  "/usr/bin/ph/emplalt/bin/clock_employee.sh "+id+
+		        			" "+rfc+" "+dept+" "+puesto+" TI";
+		        			
+		        			System.out.println("id: "+id);
+		        			System.out.println("rfc: "+rfc);
+		        			System.out.println("dept: "+dept);
+		        			System.out.println("puesto: "+puesto);
+		        			
+		        			try {
+		        				Runtime.getRuntime().exec(cmd2);
+		        						        				
+		        			} catch (IOException e) {
+		        				e.printStackTrace();
+		        			}
+		        			
+		        			
 		        			msg = "Bienvenido(a) "+ name;
 		        			JOptionPane.showMessageDialog(DateHourPanel, msg);
 		        			System.exit(0);
 		        			
 		        		} else {
+		        			String cmd2 =  "/usr/bin/ph/emplalt/bin/clock_employee.sh "+id+
+		        			" "+rfc+" "+dept+" "+puesto+" TO";
+		        			
+		        			
+		        			try {
+		        				Runtime.getRuntime().exec(cmd2);
+		        						        				
+		        			} catch (IOException e) {
+		        				e.printStackTrace();
+		        			}
 		        			msg = "Hasta luego "+name;
 		        			JOptionPane.showMessageDialog(DateHourPanel, msg);
 		        		}
@@ -277,11 +347,17 @@ public class PRBAttendance extends JFrame {
 			BufferedReader stdInput = new BufferedReader(new
 	                 InputStreamReader(p.getInputStream()));
 			
-			EmployeeBoxComboModel.addElement(new Employee("Seleccione", ""));
+			EmployeeBoxComboModel.addElement(new Employee("Seleccione", "", "", "", ""));
 			
 			while ((s = stdInput.readLine()) != null) {
 				data = s.split("\\|");
-				EmployeeBoxComboModel.addElement(new Employee(data[0], data[1]));
+				Empl_Name   = data[0];
+				Empl_NUM    = data[1];
+				Empl_RFC    = data[2];
+				Empl_Puesto = data[3];
+				Empl_Dept   = data[4];
+				EmployeeBoxComboModel.addElement(new Employee(Empl_Name, Empl_NUM, Empl_RFC,
+						Empl_Puesto, Empl_Dept));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
