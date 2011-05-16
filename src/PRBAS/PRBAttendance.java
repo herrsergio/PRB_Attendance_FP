@@ -151,7 +151,7 @@ public class PRBAttendance extends JFrame {
 				String   dept = emp.getDept();
 				String instructions;
 				
-				String[] cmd = { "/bin/sh", "-c", "/usr/bin/ph/emplalt/bin/check_if_clockin.sh "+ id};
+				String[] cmd = { "/bin/sh", "-c", "/usr/bin/ph/fingerprint/bin/check_if_clockin.sh "+ id};
 				String s;
 				String data = "";
 				
@@ -246,7 +246,7 @@ public class PRBAttendance extends JFrame {
 		        		String msg;
 		        	
 		        		if(EntradaSalida.equals("Entrada")) {
-		        			String cmd2 =  "/usr/bin/ph/emplalt/bin/clock_employee.sh "+id+
+		        			String cmd2 =  "/usr/bin/ph/fingerprint/bin/clock_employee.sh "+id+
 		        			" "+rfc+" "+dept+" "+puesto+" TI";
 		        			
 		        			System.out.println("id: "+id);
@@ -267,7 +267,7 @@ public class PRBAttendance extends JFrame {
 		        			System.exit(0);
 		        			
 		        		} else {
-		        			String cmd2 =  "/usr/bin/ph/emplalt/bin/clock_employee.sh "+id+
+		        			String cmd2 =  "/usr/bin/ph/fingerprint/bin/clock_employee.sh "+id+
 		        			" "+rfc+" "+dept+" "+puesto+" TO";
 		        			
 		        			
@@ -279,6 +279,7 @@ public class PRBAttendance extends JFrame {
 		        			}
 		        			msg = "Hasta luego "+name;
 		        			JOptionPane.showMessageDialog(DateHourPanel, msg);
+		        			System.exit(0);
 		        		}
 		        	}
      	
@@ -412,6 +413,12 @@ public class PRBAttendance extends JFrame {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		JFrame MainFrame = new PRBAttendance();
 		MainFrame.setJMenuBar(menuBar);
+		
+		MainFrame.setIconImage(
+				new ImageIcon(
+						PRBAttendance.class.getResource("/resources/prb.png")).getImage()
+				);
+		
 		MainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		MainFrame.setVisible(true);
 		MainFrame.setLocationRelativeTo(null);
