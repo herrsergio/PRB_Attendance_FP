@@ -7,6 +7,7 @@ import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -110,8 +111,11 @@ public class PRBAttendance extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				URL img = PRBAttendance.class.getResource("/resources/fingerprint.png");
+				String imagesrc = "<img src=\"" +img+ "\" width=\0\" height=\0\" ";
 				JOptionPane.showMessageDialog(DateHourPanel,
-					    "PRB Enroll Fingerprint System\nSergio Cuellar Valdes\n2011",
+					    "<html><center>" +imagesrc+ 
+					    "<br>PRB Attendance Fingerprint System<br>&copy; Sergio Cuellar Valdes 2011</cenetr></html>",
 					    "Acerca de",
 					    JOptionPane.PLAIN_MESSAGE);
 			}
