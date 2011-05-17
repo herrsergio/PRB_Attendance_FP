@@ -112,10 +112,10 @@ public class PRBAttendance extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				URL img = PRBAttendance.class.getResource("/resources/fingerprint.png");
-				String imagesrc = "<img src=\"" +img+ "\" width=\0\" height=\0\" ";
+				String imagesrc = "<img src=\"" +img+ "\" width=\0\" height=\0\">";
 				JOptionPane.showMessageDialog(DateHourPanel,
 					    "<html><center>" +imagesrc+ 
-					    "<br>PRB Attendance Fingerprint System<br>&copy; Sergio Cuellar Valdes 2011</cenetr></html>",
+					    "<br>PRB Attendance Fingerprint System<br>&copy; Sergio Cuellar Valdes 2011</center></html>",
 					    "Acerca de",
 					    JOptionPane.PLAIN_MESSAGE);
 			}
